@@ -1,0 +1,1674 @@
+
+/* =========================================================
+   NovelVerse — Complete Stylesheet
+   Version: 1.0
+   Features: Responsive layout, themes, cards, forms, dialogs
+   ========================================================= */
+
+/* ---------- 1. Theme Variables ---------- */
+
+:root {
+  color-scheme: dark;
+
+  --page-bg: #0f172a;
+  --surface-bg: #172033;
+  --surface-secondary: #1e293b;
+
+  --text-color: #f8fafc;
+  --muted-color: #94a3b8;
+
+  --accent-color: #16a34a;
+  --accent-secondary: #2563eb;
+
+  --border-color: rgba(148, 163, 184, 0.2);
+  --shadow-color: rgba(0, 0, 0, 0.25);
+
+  --danger-color: #dc2626;
+  --success-color: #16a34a;
+  --warning-color: #f59e0b;
+
+  --page-width: 1200px;
+  --header-height: 76px;
+
+  --radius-small: 10px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+
+  --transition: 0.22s ease;
+}
+
+/* ---------- 2. Reset ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 20px);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  background: var(--page-bg);
+  color: var(--text-color);
+
+  font-family:
+    Inter,
+    "Segoe UI",
+    "Microsoft YaHei",
+    "Noto Sans SC",
+    sans-serif;
+
+  line-height: 1.65;
+
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+a {
+  color: var(--accent-secondary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.25;
+}
+
+::selection {
+  background: var(--accent-color);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-secondary);
+  outline-offset: 3px;
+}
+
+/* ---------- 3. Shared Containers ---------- */
+
+main {
+  width: 100%;
+}
+
+.section,
+.hero {
+  width: min(var(--page-width), calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: 76px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.muted {
+  color: var(--muted-color);
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+
+  color: var(--accent-color);
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+/* ---------- 4. Header ---------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  min-height: var(--header-height);
+  padding: 12px max(24px, calc((100% - var(--page-width)) / 2));
+
+  background: var(--surface-bg);
+  border-bottom: 1px solid var(--border-color);
+
+  box-shadow: 0 8px 24px var(--shadow-color);
+
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  flex-shrink: 0;
+
+  color: var(--text-color);
+
+  font-size: 20px;
+  font-weight: 850;
+  letter-spacing: -0.04em;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
+
+  color: #ffffff;
+  font-size: 22px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: var(--muted-color);
+
+  font-size: 14px;
+  font-weight: 650;
+
+  transition: color var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--text-color);
+}
+
+.account-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ---------- 5. Buttons ---------- */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 42px;
+  padding: 10px 16px;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-small);
+
+  font-size: 13px;
+  font-weight: 750;
+
+  text-align: center;
+  white-space: normal;
+
+  transition:
+    transform var(--transition),
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.button-primary {
+  background: linear-gradient(
+    135deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
+
+  color: #ffffff;
+
+  box-shadow: 0 6px 20px var(--shadow-color);
+}
+
+.button-primary:hover:not(:disabled) {
+  box-shadow: 0 10px 26px var(--shadow-color);
+}
+
+.button-ghost {
+  background: var(--surface-secondary);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.button-ghost:hover:not(:disabled) {
+  border-color: var(--accent-color);
+}
+
+.text-button {
+  padding: 8px 0;
+
+  background: transparent;
+  border: none;
+
+  color: var(--accent-secondary);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.text-button:hover {
+  text-decoration: underline;
+}
+
+/* ---------- 6. Hero ---------- */
+
+.hero {
+  position: relative;
+
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 50px;
+
+  min-height: 550px;
+  padding-block: 70px;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero h1 {
+  margin-bottom: 24px;
+
+  font-size: clamp(40px, 5.5vw, 72px);
+  font-weight: 900;
+  letter-spacing: -0.065em;
+  line-height: 1.12;
+}
+
+.hero h1 span {
+  color: var(--accent-color);
+}
+
+.hero-description {
+  max-width: 520px;
+  margin-bottom: 30px;
+
+  color: var(--muted-color);
+
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 34px;
+
+  margin-top: 44px;
+}
+
+.hero-stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-stats strong {
+  font-size: 23px;
+  font-weight: 850;
+}
+
+.hero-stats span {
+  color: var(--muted-color);
+  font-size: 12px;
+}
+
+/* ---------- 7. Decorative Book ---------- */
+
+.hero-art {
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  min-height: 370px;
+  overflow: hidden;
+
+  border-radius: var(--radius-large);
+
+  background:
+    radial-gradient(
+      circle at 50% 45%,
+      color-mix(in srgb, var(--accent-color) 20%, transparent),
+      transparent 58%
+    ),
+    var(--surface-bg);
+}
+
+.orbit {
+  position: absolute;
+
+  width: 270px;
+  height: 270px;
+
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+}
+
+.orbit-one {
+  transform: rotateX(65deg) rotate(-20deg);
+}
+
+.orbit-two {
+  width: 340px;
+  height: 340px;
+
+  transform: rotateX(65deg) rotate(30deg);
+}
+
+.book-art {
+  position: relative;
+  z-index: 2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 190px;
+  height: 260px;
+  padding: 24px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px 18px 18px 8px;
+
+  background: linear-gradient(
+    145deg,
+    var(--accent-color),
+    var(--accent-secondary)
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    18px 22px 40px var(--shadow-color),
+    inset 5px 0 rgba(255, 255, 255, 0.15);
+
+  transform: rotate(-7deg);
+
+  transition: transform 0.4s ease;
+}
+
+.hero-art:hover .book-art {
+  transform: rotate(-2deg) translateY(-6px);
+}
+
+.book-art > span {
+  font-size: 28px;
+}
+
+.book-art strong {
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+}
+
+.book-art small {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+}
+
+.floating-star {
+  position: absolute;
+  z-index: 3;
+
+  color: var(--accent-color);
+  font-size: 34px;
+
+  animation: star-float 4s ease-in-out infinite;
+}
+
+.star-one {
+  top: 18%;
+  right: 17%;
+}
+
+.star-two {
+  bottom: 17%;
+  left: 17%;
+
+  animation-delay: -2s;
+}
+
+@keyframes star-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+/* ---------- 8. Section Headings ---------- */
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+.section-heading h2 {
+  margin-bottom: 10px;
+
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 850;
+  letter-spacing: -0.04em;
+}
+
+.section-heading > div > p:not(.eyebrow) {
+  margin-bottom: 0;
+
+  color: var(--muted-color);
+  font-size: 14px;
+}
+
+.status-text {
+  color: var(--muted-color);
+  font-size: 12px;
+}
+
+/* ---------- 9. Library Tools ---------- */
+
+.library-tools {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) 190px 170px;
+  gap: 12px;
+
+  margin-bottom: 26px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 48px;
+  padding-inline: 15px;
+
+  background: var(--surface-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-small);
+
+  color: var(--muted-color);
+}
+
+.search-box > span {
+  font-size: 25px;
+}
+
+.search-box input {
+  width: 100%;
+  min-width: 0;
+
+  padding: 8px 0;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  color: var(--text-color);
+}
+
+.search-box input:focus-visible {
+  outline: none;
+}
+
+.library-tools > select {
+  min-width: 0;
+}
+
+/* ---------- 10. Forms and Inputs ---------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.field > span,
+.field > label {
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.field small {
+  color: var(--muted-color);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+input:not([type="checkbox"]):not([type="color"]):not([type="file"]),
+textarea,
+select {
+  width: 100%;
+  min-width: 0;
+
+  padding: 12px 14px;
+
+  background: var(--surface-secondary);
+  color: var(--text-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-small);
+
+  outline: none;
+
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted-color);
+  opacity: 0.8;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent-color);
+
+  box-shadow: 0 0 0 3px
+    color-mix(in srgb, var(--accent-color) 18%, transparent);
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+input[type="file"] {
+  width: 100%;
+  min-width: 0;
+
+  padding: 10px;
+
+  background: var(--surface-secondary);
+  color: var(--text-color);
+
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-small);
+
+  font-size: 12px;
+}
+
+input[type="file"]::file-selector-button {
+  margin-right: 10px;
+  padding: 7px 10px;
+
+  background: var(--accent-color);
+  color: #ffffff;
+
+  border: none;
+  border-radius: 7px;
+
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+
+  accent-color: var(--accent-color);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  color: var(--muted-color);
+  font-size: 12px;
+}
+
+.checkbox-label input {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* ---------- 11. Panels ---------- */
+
+.panel {
+  padding: 24px;
+
+  background: var(--surface-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-medium);
+
+  box-shadow: 0 8px 30px var(--shadow-color);
+
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+/* ---------- 12. Upload Form ---------- */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.field-full {
+  grid-column: 1 / -1;
+}
+
+.form-grid > .field-full > .button {
+  width: 100%;
+}
+
+.form-message {
+  min-height: 20px;
+  margin: 6px 0 0;
+
+  color: var(--muted-color);
+  font-size: 12px;
+
+  overflow-wrap: anywhere;
+}
+
+.form-message.success {
+  color: var(--success-color);
+}
+
+.form-message.error {
+  color: var(--danger-color);
+}
+
+/* ---------- 13. Book Grid ---------- */
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  overflow: hidden;
+
+  background: var(--surface-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-medium);
+
+  transition:
+    transform var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+
+  border-color: var(--accent-color);
+
+  box-shadow: 0 14px 35px var(--shadow-color);
+}
+
+.book-cover {
+  position: relative;
+
+  display: grid;
+  place-items: center;
+
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      color-mix(in srgb, var(--accent-color) 65%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(
+      145deg,
+      var(--surface-secondary),
+      var(--page-bg)
+    );
+
+  color: var(--text-color);
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.book-cover-placeholder {
+  padding: 20px;
+
+  font-size: 48px;
+  text-align: center;
+}
+
+.book-card-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 16px;
+}
+
+.book-card h3 {
+  margin-bottom: 0;
+
+  font-size: 17px;
+  font-weight: 800;
+
+  overflow-wrap: anywhere;
+}
+
+.book-author {
+  margin-bottom: 0;
+
+  color: var(--muted-color);
+  font-size: 11px;
+}
+
+.book-description {
+  display: -webkit-box;
+  overflow: hidden;
+
+  color: var(--muted-color);
+  font-size: 12px;
+  line-height: 1.8;
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.book-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+
+  margin-top: auto;
+}
+
+.book-tag {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 4px 8px;
+
+  background: var(--surface-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+
+  color: var(--muted-color);
+  font-size: 10px;
+}
+
+.book-price {
+  color: var(--accent-color);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.book-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  margin-top: 8px;
+}
+
+.book-card-actions .button {
+  flex: 1;
+}
+
+/* ---------- 14. Empty State ---------- */
+
+.empty-state {
+  grid-column: 1 / -1;
+
+  padding: 56px 20px;
+
+  background: var(--surface-bg);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-medium);
+
+  text-align: center;
+}
+
+.empty-icon {
+  display: block;
+  margin-bottom: 16px;
+
+  font-size: 42px;
+}
+
+.empty-state h3 {
+  margin-bottom: 8px;
+  font-size: 19px;
+}
+
+.empty-state p {
+  margin-bottom: 0;
+
+  color: var(--muted-color);
+  font-size: 13px;
+}
+
+/* ---------- 15. Wallet ---------- */
+
+.wallet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.wallet-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.wallet-card::after {
+  position: absolute;
+  top: -35px;
+  right: -35px;
+
+  width: 120px;
+  height: 120px;
+
+  border-radius: 50%;
+
+  background: color-mix(
+    in srgb,
+    var(--accent-color) 12%,
+    transparent
+  );
+
+  content: "";
+  pointer-events: none;
+}
+
+.wallet-icon {
+  display: inline-grid;
+  place-items: center;
+
+  width: 44px;
+  height: 44px;
+  margin-bottom: 15px;
+
+  background: var(--surface-secondary);
+  border-radius: 13px;
+
+  font-size: 22px;
+}
+
+.wallet-card > p {
+  margin-bottom: 8px;
+
+  color: var(--muted-color);
+  font-size: 13px;
+}
+
+.wallet-card > strong {
+  display: block;
+  margin-bottom: 10px;
+
+  font-size: 32px;
+  font-weight: 900;
+}
+
+.wallet-card > small {
+  color: var(--muted-color);
+  font-size: 11px;
+}
+
+.wallet-card .button {
+  margin-top: 8px;
+}
+
+.ledger-panel {
+  margin-top: 22px;
+}
+
+.ledger-panel h3 {
+  margin-bottom: 20px;
+}
+
+#point-ledger {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- 16. Bookshelf ---------- */
+
+#bookshelf-content {
+  min-height: 80px;
+}
+
+#bookshelf-content > p {
+  margin-bottom: 0;
+}
+
+/* ---------- 17. Admin ---------- */
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.admin-toolbar h3 {
+  margin-bottom: 0;
+}
+
+#admin-book-list {
+  overflow-x: auto;
+}
+
+.admin-book-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-book-row:last-child {
+  border-bottom: none;
+}
+
+.admin-book-info {
+  min-width: 0;
+}
+
+.admin-book-info strong {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.admin-book-info small {
+  color: var(--muted-color);
+  font-size: 11px;
+}
+
+.admin-book-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- 18. Help Section ---------- */
+
+.help-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+
+  padding: 36px;
+
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      color-mix(in srgb, var(--accent-color) 14%, transparent),
+      transparent 50%
+    ),
+    var(--surface-bg);
+}
+
+.help-panel h2 {
+  margin-bottom: 12px;
+  font-size: 30px;
+}
+
+.help-panel > div > p:not(.eyebrow) {
+  margin-bottom: 0;
+
+  color: var(--muted-color);
+  font-size: 13px;
+}
+
+.help-points p {
+  margin-bottom: 12px;
+
+  font-size: 13px;
+}
+
+.help-points p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- 19. Footer ---------- */
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  padding: 44px 24px;
+
+  border-top: 1px solid var(--border-color);
+
+  text-align: center;
+}
+
+.footer > p {
+  margin-bottom: 0;
+
+  color: var(--muted-color);
+  font-size: 13px;
+}
+
+.footer > small {
+  color: var(--muted-color);
+  font-size: 11px;
+}
+
+/* ---------- 20. Dialogs ---------- */
+
+dialog {
+  max-width: calc(100% - 32px);
+  max-height: calc(100% - 32px);
+
+  padding: 0;
+
+  background: var(--surface-bg);
+  color: var(--text-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-large);
+
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.45);
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(5px);
+}
+
+.auth-dialog {
+  width: 440px;
+}
+
+.auth-card {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  padding: 34px;
+}
+
+.auth-card h2 {
+  margin-bottom: 0;
+  font-size: 30px;
+}
+
+.auth-card > .eyebrow {
+  margin-bottom: -12px;
+}
+
+.auth-card > .muted {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.auth-card > .button {
+  width: 100%;
+}
+
+.dialog-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+
+  background: var(--surface-secondary);
+  color: var(--text-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+
+  font-size: 23px;
+}
+
+.reader-dialog {
+  width: 850px;
+}
+
+.reader-card {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 300px;
+  max-height: 85vh;
+}
+
+.reader-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 18px 24px;
+
+  background: var(--surface-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.reader-toolbar h2 {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.reader-content {
+  min-height: 240px;
+  padding: 28px;
+
+  overflow-y: auto;
+
+  color: var(--text-color);
+
+  line-height: 2;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.reader-footer {
+  padding: 18px 24px;
+
+  border-top: 1px solid var(--border-color);
+}
+
+.reader-footer > p {
+  margin: 8px 0 0;
+  font-size: 11px;
+}
+
+/* ---------- 21. Toast ---------- */
+
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 1000;
+
+  max-width: min(380px, calc(100% - 48px));
+  padding: 14px 18px;
+
+  background: var(--surface-bg);
+  color: var(--text-color);
+
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-small);
+
+  box-shadow: 0 10px 35px var(--shadow-color);
+
+  font-size: 13px;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform: translateY(10px);
+
+  transition:
+    opacity var(--transition),
+    visibility var(--transition),
+    transform var(--transition);
+
+  overflow-wrap: anywhere;
+}
+
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+
+  transform: translateY(0);
+}
+
+/* ---------- 22. Theme Settings ---------- */
+
+.theme-settings {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theme-settings label {
+  color: var(--muted-color);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.theme-settings select {
+  width: auto;
+  max-width: 210px;
+  min-height: 38px;
+
+  padding: 7px 10px;
+
+  font-size: 12px;
+}
+
+#custom-color {
+  flex-shrink: 0;
+
+  width: 38px;
+  height: 38px;
+  padding: 3px;
+
+  background: var(--surface-secondary);
+
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+
+  cursor: pointer;
+}
+
+/* ---------- 23. Responsive: Tablets ---------- */
+
+@media (max-width: 1050px) {
+  .topbar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .hero {
+    gap: 24px;
+  }
+
+  .book-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .section,
+  .hero {
+    width: calc(100% - 32px);
+  }
+
+  .section {
+    padding-block: 48px;
+  }
+
+  .topbar {
+    position: relative;
+
+    padding: 14px 16px;
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .brand-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .account-actions {
+    margin-left: auto;
+  }
+
+  .account-actions .button {
+    min-height: 38px;
+    padding: 8px 10px;
+
+    font-size: 11px;
+  }
+
+  .nav-links {
+    gap: 16px;
+
+    overflow-x: auto;
+    flex-wrap: nowrap;
+
+    padding-bottom: 4px;
+  }
+
+  .nav-links a {
+    flex-shrink: 0;
+    font-size: 12px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    padding-block: 48px;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 9vw, 58px);
+  }
+
+  .hero-art {
+    min-height: 320px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .library-tools {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-box {
+    grid-column: 1 / -1;
+  }
+
+  .book-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .book-card-content {
+    padding: 12px;
+  }
+
+  .book-card h3 {
+    font-size: 15px;
+  }
+
+  .form-grid {
+    gap: 18px;
+  }
+
+  .wallet-grid {
+    gap: 14px;
+  }
+
+  .wallet-card {
+    padding: 18px;
+  }
+
+  .help-panel {
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    padding: 24px;
+  }
+
+  .theme-settings {
+    width: 100%;
+  }
+}
+
+/* ---------- 24. Responsive: Phones ---------- */
+
+@media (max-width: 480px) {
+  .account-actions {
+    width: 100%;
+  }
+
+  .account-actions .button {
+    flex: 1;
+  }
+
+  .hero-stats {
+    gap: 20px;
+  }
+
+  .hero-stats strong {
+    font-size: 20px;
+  }
+
+  .hero-art {
+    min-height: 280px;
+  }
+
+  .book-art {
+    width: 160px;
+    height: 220px;
+  }
+
+  .orbit {
+    width: 220px;
+    height: 220px;
+  }
+
+  .orbit-two {
+    width: 280px;
+    height: 280px;
+  }
+
+  .library-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .search-box {
+    grid-column: auto;
+  }
+
+  .book-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .book-card-content {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .book-card h3 {
+    font-size: 13px;
+  }
+
+  .book-description {
+    font-size: 11px;
+  }
+
+  .book-card-actions {
+    flex-direction: column;
+  }
+
+  .book-card-actions .button {
+    width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field-full {
+    grid-column: auto;
+  }
+
+  .wallet-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .auth-card {
+    padding: 28px 22px;
+  }
+
+  .reader-content {
+    padding: 20px;
+  }
+
+  .reader-toolbar {
+    padding: 14px 18px;
+  }
+
+  .reader-toolbar h2 {
+    font-size: 16px;
+  }
+
+  .reader-footer {
+    padding: 14px 18px;
+  }
+
+  .admin-book-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-book-actions {
+    width: 100%;
+  }
+
+  .admin-book-actions .button {
+    flex: 1;
+  }
+
+  .theme-settings select {
+    flex: 1;
+    max-width: none;
+  }
+}
+
+/* ---------- 25. Reduced Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+

@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#171329">
+  <meta name="description" content="NovelVerse — 发现好书，阅读故事，分享你的作品。">
+  <title>NovelVerse · 小说宇宙</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase JavaScript SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+          defer></script>
+  <script src="config.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="NovelVerse 首页">
+      <span class="brand-icon">✦</span>
+      <span>NovelVerse</span>
+    </a>
+
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#home">首页</a>
+      <a href="#library">书城</a>
+      <a href="#upload">上传小说</a>
+      <a href="#wallet">我的积分</a>
+    </nav>
+
+    <div class="account-actions">
+      <button id="login-open" class="button button-ghost" type="button">
+        登录
+      </button>
+      <button id="register-open" class="button button-primary" type="button">
+        注册账号
+      </button>
+      <button id="logout-button" class="button button-ghost hidden"
+              type="button">
+        退出登录
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">YOUR NEXT STORY STARTS HERE</p>
+        <h1>进入小说的<br><span>无限宇宙。</span></h1>
+        <p class="hero-description">
+          发现喜欢的故事，认识新的作者，用积分解锁阅读体验，
+          也可以分享你自己的作品。
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#library">开始阅读 →</a>
+          <a class="button button-ghost" href="#upload">发布我的小说</a>
+        </div>
+
+        <div class="hero-stats">
+          <div>
+            <strong id="book-count">—</strong>
+            <span>公开小说</span>
+          </div>
+          <div>
+            <strong id="reader-count">—</strong>
+            <span>阅读社区</span>
+          </div>
+          <div>
+            <strong>∞</strong>
+            <span>故事可能</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="book-art">
+          <span>✦</span>
+          <strong>STORIES<br>BEYOND<br>IMAGINATION</strong>
+          <small>NOVELVERSE</small>
+        </div>
+        <div class="floating-star star-one">✧</div>
+        <div class="floating-star star-two">✦</div>
+      </div>
+    </section>
+
+    <section id="library" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">EXPLORE THE LIBRARY</p>
+          <h2>探索书城</h2>
+          <p>找到下一本让你舍不得放下的小说。</p>
+        </div>
+        <span id="library-status" class="status-text">正在准备书城…</span>
+      </div>
+
+      <div class="library-tools">
+        <label class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input id="search-input" type="search"
+                 placeholder="搜索书名、作者或简介…"
+                 aria-label="搜索小说">
+        </label>
+
+        <select id="category-filter" aria-label="筛选小说分类">
+          <option value="">全部分类</option>
+          <option value="奇幻">奇幻</option>
+          <option value="科幻">科幻</option>
+          <option value="冒险">冒险</option>
+          <option value="悬疑">悬疑</option>
+          <option value="校园">校园</option>
+          <option value="其他">其他</option>
+        </select>
+
+        <select id="sort-filter" aria-label="小说排序">
+          <option value="newest">最新发布</option>
+          <option value="popular">热门阅读</option>
+          <option value="title">书名排序</option>
+        </select>
+      </div>
+
+      <div id="book-grid" class="book-grid">
+        <div class="empty-state">
+          <span class="empty-icon">📚</span>
+          <h3>正在连接小说宇宙</h3>
+          <p>配置 Supabase 后，这里会显示公开的小说。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="upload" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">SHARE YOUR STORY</p>
+          <h2>发布你的小说</h2>
+          <p>填写作品资料并上传文件。发布成功后，作品可以进入公开书城。</p>
+        </div>
+      </div>
+
+      <form id="upload-form" class="panel form-grid">
+        <label class="field">
+          <span>小说名称 *</span>
+          <input id="book-title" name="title" maxlength="150"
+                 required placeholder="给你的故事起个名字">
+        </label>
+
+        <label class="field">
+          <span>小说分类 *</span>
+          <select id="book-category" name="category" required>
+            <option value="">请选择分类</option>
+            <option value="奇幻">奇幻</option>
+            <option value="科幻">科幻</option>
+            <option value="冒险">冒险</option>
+            <option value="悬疑">悬疑</option>
+            <option value="校园">校园</option>
+            <option value="其他">其他</option>
+          </select>
+        </label>
+
+        <label class="field field-full">
+          <span>作品简介 *</span>
+          <textarea id="book-description" name="description"
+                    maxlength="3000" rows="4" required
+                    placeholder="介绍你的故事，让读者认识它…"></textarea>
+        </label>
+
+        <label class="field">
+          <span>封面图片（可选）</span>
+          <input id="book-cover" name="cover" type="file"
+                 accept="image/png,image/jpeg,image/webp">
+          <small>建议使用 JPG、PNG 或 WebP 图片。</small>
+        </label>
+
+        <label class="field">
+          <span>小说文件 *</span>
+          <input id="book-file" name="file" type="file"
+                 accept=".txt,.pdf,.epub" required>
+          <small>首版支持 TXT、PDF、EPUB；实际可用格式取决于后端配置。</small>
+        </label>
+
+        <div class="field">
+          <span>阅读价格（积分）*</span>
+          <input id="read-price" name="read_price" type="number"
+                 min="10" max="200" step="1" value="10" required>
+          <small>允许范围：10–200 积分。</small>
+        </div>
+
+        <div class="field">
+          <span>离线缓存价格（积分）*</span>
+          <input id="offline-price" name="offline_price" type="number"
+                 min="200" max="1000" step="1" value="200" required>
+          <small>允许范围：200–1000 积分。</small>
+        </div>
+
+        <div class="field">
+          <span>设备下载价格（积分）*</span>
+          <input id="download-price" name="download_price" type="number"
+                 min="2000" max="10000" step="1" value="2000" required>
+          <small>允许范围：2000–10000 积分。</small>
+        </div>
+
+        <div class="field field-full">
+          <label class="checkbox-label">
+            <input id="upload-agreement" type="checkbox" required>
+            <span>我拥有上传此作品的权利，并同意遵守网站规则。</span>
+          </label>
+        </div>
+
+        <div class="field field-full">
+          <button class="button button-primary" type="submit">
+            发布小说
+          </button>
+          <p id="upload-message" class="form-message" role="status"></p>
+        </div>
+      </form>
+    </section>
+
+    <section id="wallet" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR READING WALLET</p>
+          <h2>我的积分</h2>
+          <p>签到获取积分，阅读与下载喜欢的作品。</p>
+        </div>
+      </div>
+
+      <div class="wallet-grid">
+        <article class="panel wallet-card">
+          <span class="wallet-icon">✦</span>
+          <p>当前积分</p>
+          <strong id="points-balance">—</strong>
+          <small>请登录后查看真实余额。</small>
+        </article>
+
+        <article class="panel wallet-card">
+          <span class="wallet-icon">🎁</span>
+          <p>每日签到</p>
+          <strong>+10～100</strong>
+          <button id="checkin-button" class="button button-primary"
+                  type="button">每日签到</button>
+          <p id="checkin-message" class="form-message" role="status"></p>
+        </article>
+      </div>
+
+      <div class="panel ledger-panel">
+        <h3>积分记录</h3>
+        <div id="point-ledger">
+          <p class="muted">登录后查看积分收支记录。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="bookshelf" class="section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">YOUR COLLECTION</p>
+          <h2>我的书架</h2>
+          <p>管理你已解锁的阅读内容。</p>
+        </div>
+      </div>
+      <div id="bookshelf-content" class="panel">
+        <p class="muted">登录后查看你的书架。</p>
+      </div>
+    </section>
+
+    <section id="admin-panel" class="section hidden">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">ADMINISTRATION</p>
+          <h2>管理员控制台</h2>
+          <p>管理公开作品与积分价格。只有服务端授权的管理员可以执行操作。</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="admin-toolbar">
+          <h3>小说管理</h3>
+          <button id="admin-refresh" class="button button-ghost"
+                  type="button">刷新列表</button>
+        </div>
+        <div id="admin-book-list">
+          <p class="muted">管理员登录后加载管理列表。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section help-section">
+      <div class="panel help-panel">
+        <div>
+          <p class="eyebrow">HOW IT WORKS</p>
+          <h2>阅读，也是一场探索</h2>
+          <p>注册账号，领取初始积分，发现喜欢的作品，并支持创作者。</p>
+        </div>
+        <div class="help-points">
+          <p>✦ 新用户注册奖励：150 积分</p>
+          <p>✦ 每日签到：10–100 积分</p>
+          <p>✦ 阅读、离线缓存与设备下载采用不同积分价格</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <a class="brand" href="#home">
+      <span class="brand-icon">✦</span>
+      <span>NovelVerse</span>
+    </a>
+    <p>让每一个故事，都有被发现的机会。</p>
+    <small>© 2026 NovelVerse · 阅读与创作社区</small>
+  </footer>
+
+  <!-- 登录与注册弹窗 -->
+  <dialog id="auth-dialog" class="auth-dialog">
+    <form id="auth-form" class="auth-card">
+      <button id="auth-close" class="dialog-close" type="button"
+              aria-label="关闭">×</button>
+
+      <p class="eyebrow">WELCOME TO NOVELVERSE</p>
+      <h2 id="auth-title">登录账号</h2>
+      <p id="auth-description" class="muted">继续你的阅读旅程。</p>
+
+      <label class="field">
+        <span>电子邮箱</span>
+        <input id="auth-email" type="email" autocomplete="email"
+               required placeholder="you@example.com">
+      </label>
+
+      <label class="field">
+        <span>密码</span>
+        <input id="auth-password" type="password"
+               autocomplete="current-password" minlength="8"
+               required placeholder="至少 8 个字符">
+      </label>
+
+      <p id="auth-message" class="form-message" role="status"></p>
+
+      <button id="auth-submit" class="button button-primary"
+              type="submit">登录</button>
+
+      <button id="auth-switch" class="text-button" type="button">
+        还没有账号？立即注册
+      </button>
+    </form>
+  </dialog>
+
+  <!-- 阅读器 -->
+  <dialog id="reader-dialog" class="reader-dialog">
+    <div class="reader-card">
+      <div class="reader-toolbar">
+        <h2 id="reader-title">小说阅读器</h2>
+        <button id="reader-close" class="button button-ghost"
+                type="button">关闭</button>
+      </div>
+      <div id="reader-content" class="reader-content">
+        <p class="muted">选择一本小说开始阅读。</p>
+      </div>
+      <div class="reader-footer">
+        <button id="reader-complete" class="button button-primary"
+                type="button">领取完读奖励</button>
+        <p class="muted">请在真正读完后领取；服务端仍需设置防刷限制。</p>
+      </div>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div class="theme-settings">
+  <label for="theme-select">🎨 背景主题</label>
+
+  <select id="theme-select">
+    <option value="default">🌿 绿色 + 蓝色（默认）</option>
+    <option value="teal">🩵 Teal</option>
+    <option value="mint">🌱 浅青色</option>
+    <option value="purple">💜 紫色</option>
+    <option value="pink">🩷 粉红色</option>
+    <option value="red">❤️ 红色</option>
+    <option value="white">🤍 白色</option>
+    <option value="black">🖤 黑色</option>
+    <option value="sky">☁️ 天空蓝</option>
+    <option value="custom">🎨 自定义颜色</option>
+  </select>
+
+  <input
+    type="color"
+    id="custom-color"
+    value="#16A34A"
+    aria-label="选择自定义背景颜色"
+    title="选择自定义背景颜色"
+  >
+</div>
+</body>
+</html>
