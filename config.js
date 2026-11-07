@@ -7,10 +7,10 @@
 window.NOVELVERSE_CONFIG = {
 
     // Supabase 项目 URL
-    SUPABASE_URL: "YOUR_SUPABASE_URL",
+    SUPABASE_URL: "https://lbhplckordconkepbnlq.supabase.co",
 
     // Supabase Publishable Key 或旧版 anon public key
-    SUPABASE_ANON_KEY: "YOUR_SUPABASE_PUBLISHABLE_KEY",
+    SUPABASE_ANON_KEY: "sb_publishable_xHC5vA3oBYJEpMHEatEQwA_r1izOwNh",
 
     // 网站设置
     APP_NAME: "NovelVerse",
